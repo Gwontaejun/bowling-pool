@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 
-const list = ['1', '2', '3', '4', '11111'];
+// eslint-disable-next-line import/prefer-default-export
+export const GET = async () => {
+  const list = ['1', '2', '3', '4', '11111'];
 
-export const GET = async (_req: string) => {
-  return await NextResponse.json({ list: list });
+  return NextResponse.json({ list });
 };
