@@ -7,9 +7,11 @@ interface PropsType {
 }
 
 const SearchList = (props: PropsType) => {
+  const { list } = props;
+
   return (
     <ul>
-      {props.list.map((item, index: number) => (
+      {list.map((item, index: number) => (
         <li key={`${index}`}>{item}</li>
       ))}
     </ul>
