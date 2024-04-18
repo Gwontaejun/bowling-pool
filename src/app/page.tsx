@@ -7,7 +7,7 @@ const Home = async () => {
 
   return (
     <div>
-      <SearchList list={data.list} />
+      <SearchList list={data.list || []} />
     </div>
   );
 };

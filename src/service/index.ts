@@ -1,3 +1,5 @@
+'use server';
+
 import puppeteer from 'puppeteer';
 
 import { ChiltenResDataType, SearchDataType } from '@src/app/api/getList/type';
