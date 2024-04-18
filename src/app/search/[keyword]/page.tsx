@@ -9,10 +9,7 @@ interface PropsType {
 
 const Page = async ({ params }: PropsType) => {
   const data = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/getList?keyword=${params.keyword}`,
-    {
-      next: { revalidate: 3600 },
-    }
+    `${process.env.NEXT_PUBLIC_API_URL}/api/getList?keyword=${params.keyword}`
   ).then((r) => r.json());
 
   return (

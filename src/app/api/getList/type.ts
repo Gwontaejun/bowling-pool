@@ -9,9 +9,10 @@ export interface ChiltenResDataType {
 }
 
 export interface SearchDataType {
-  id: number;
+  id?: number;
+  platform: number;
   link: string;
   title: string;
   image: string;
-  date: string;
+  date?: string;
 }
