@@ -42,6 +42,9 @@ const nextConfig = {
   },
   reactStrictMode: true,
   cleanDistDir: true,
+  experimental: {
+    serverComponentsExternalPackages: ['puppeteer', '@sparticuz/chromium'],
+  },
 };
 
 export default nextConfig;

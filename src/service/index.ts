@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer';
 
 import { ChiltenResDataType, SearchDataType } from '@src/app/api/getList/type';
+import Chromium from '@sparticuz/chromium';
 
 // 칠텐 api 호출
 const chilten = async (keyword: string) => {
@@ -41,6 +42,8 @@ const danggn = async (keyword: string) => {
       width: 1920,
       height: 1080,
     },
+    headless: Chromium.headless,
+    executablePath: await Chromium.executablePath(),
   });
 
   const page = await browser.newPage();
