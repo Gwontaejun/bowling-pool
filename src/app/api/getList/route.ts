@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { SearchDataType } from '@src/app/api/getList/type';
-import { chilten } from '@src/service';
+import { chilten, danggn, joongna } from '@src/service';
 
 // eslint-disable-next-line import/prefer-default-export
 export const GET = async (
@@ -13,8 +13,8 @@ export const GET = async (
 
   const crawlResult = await Promise.all([
     ...(await chilten(keyword ?? '')),
-    // ...(await danggn(keyword ?? '')),
-    // ...(await joongna(keyword ?? '')),
+    ...(await danggn(keyword ?? '')),
+    ...(await joongna(keyword ?? '')),
   ]);
 
   return NextResponse.json({ list: crawlResult });
