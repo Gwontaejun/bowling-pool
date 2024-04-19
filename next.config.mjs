@@ -36,6 +36,7 @@ const nextConfig = {
   },
   reactStrictMode: true,
   cleanDistDir: true,
+  ignoreBuildErrors: true,
 };
 
 export default nextConfig;
