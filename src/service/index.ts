@@ -1,5 +1,3 @@
-'use server';
-
 import puppeteer from 'puppeteer';
 
 import { ChiltenResDataType, SearchDataType } from '@src/app/api/getList/type';
@@ -24,7 +22,9 @@ const chilten = async (keyword: string) => {
       platform: 1,
       link: `https://www.chilten.com/markets/${item.id}`,
       title: item.title,
-      image: `https://175f8cbde885d84d.kinxzone.com${item.filePath}`,
+      image: item.filePath.includes('https://')
+        ? item.filePath
+        : `https://175f8cbde885d84d.kinxzone.com${item.filePath}`,
       date: item.regDate,
     });
   });

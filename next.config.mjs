@@ -4,6 +4,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'd1kkq1cpsx3kgn.cloudfront.net',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: '175f8cbde885d84d.kinxzone.com',
         port: '',
         pathname: '/**',
@@ -36,7 +42,6 @@ const nextConfig = {
   },
   reactStrictMode: true,
   cleanDistDir: true,
-  ignoreBuildErrors: true,
 };
 
 export default nextConfig;
