@@ -1,7 +1,7 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
 
 import { ChiltenResDataType, SearchDataType } from '@src/app/api/getList/type';
-import Chromium from '@sparticuz/chromium';
 
 // 칠텐 api 호출
 const chilten = async (keyword: string) => {
@@ -42,8 +42,11 @@ const danggn = async (keyword: string) => {
       width: 1920,
       height: 1080,
     },
-    headless: Chromium.headless,
-    executablePath: await Chromium.executablePath(),
+    args: chromium.args,
+    // executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
   });
 
   const page = await browser.newPage();
