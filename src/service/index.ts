@@ -43,8 +43,10 @@ const danggn = async (keyword: string) => {
       height: 1080,
     },
     args: chromium.args,
-    // executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
-    executablePath: await chromium.executablePath(),
+    executablePath:
+      process.env.NODE_ENV === 'development'
+        ? 'C:/Program Files/Google/Chrome/Application/chrome.exe'
+        : await chromium.executablePath(),
     headless: chromium.headless,
     ignoreHTTPSErrors: true,
   });
@@ -96,6 +98,13 @@ const joongna = async (keyword: string) => {
       width: 1920,
       height: 1080,
     },
+    args: chromium.args,
+    executablePath:
+      process.env.NODE_ENV === 'development'
+        ? 'C:/Program Files/Google/Chrome/Application/chrome.exe'
+        : await chromium.executablePath(),
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
   });
 
   const page = await browser.newPage();
@@ -135,4 +144,116 @@ const joongna = async (keyword: string) => {
   return joongnaList;
 };
 
-export { danggn, joongna, chilten };
+const bunjang = async (keyword: string) => {
+  const bunjangList: SearchDataType[] = [];
+
+  const browser = await puppeteer.launch({
+    defaultViewport: {
+      width: 1920,
+      height: 1080,
+    },
+    args: chromium.args,
+    executablePath:
+      process.env.NODE_ENV === 'development'
+        ? 'C:/Program Files/Google/Chrome/Application/chrome.exe'
+        : await chromium.executablePath(),
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
+  });
+
+  const page = await browser.newPage();
+
+  await page.goto(
+    `https://m.bunjang.co.kr/search/products?order=date&q=${keyword}`,
+    {
+      waitUntil: 'load',
+      timeout: 0,
+    }
+  );
+
+  const listEl = await page.$$('div.sc-eTpRJs > div.sc-dxZgTM > a.sc-jKVCRD');
+
+  await Promise.all(
+    listEl.map(async (el) => {
+      const imgEl = await el.$('.sc-kaNhvL > img');
+      const titleEl = await el.$('.sc-LKuAh > .sc-iBEsjs');
+      const image = (await page.evaluate((tag) => tag?.src, imgEl)) as string;
+      const title = (await page.evaluate(
+        (tag) => tag?.textContent,
+        titleEl
+      )) as string;
+      const link = (await page.evaluate((tag) => tag?.href, el)) as string;
+
+      bunjangList.push({
+        platform: 3,
+        image,
+        title,
+        link,
+      });
+    })
+  );
+
+  await page.close();
+
+  return bunjangList;
+};
+
+const ggammani = async (keyword: string) => {
+  const ggammaniList: SearchDataType[] = [];
+
+  const browser = await puppeteer.launch({
+    defaultViewport: {
+      width: 1920,
+      height: 1080,
+    },
+    args: chromium.args,
+    executablePath:
+      process.env.NODE_ENV === 'development'
+        ? 'C:/Program Files/Google/Chrome/Application/chrome.exe'
+        : await chromium.executablePath(),
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
+  });
+
+  const page = await browser.newPage();
+
+  await page.goto(
+    `https://m.cafe.daum.net/bowlingevent/search?query=${keyword}`,
+    {
+      waitUntil: 'load',
+      timeout: 0,
+    }
+  );
+
+  const listEl = await page.$$('ul.list_cafe > li > a.link_cafe');
+
+  await Promise.all(
+    listEl.map(async (el) => {
+      const imgEl = await el.$('.cafe_thumb > img');
+      const titleEl = await el.$('.info_cafe > .tit_info');
+      const image = (await page.evaluate((tag) => tag?.src, imgEl)) as string;
+      const title = (await page.evaluate(
+        (tag) => tag?.textContent,
+        titleEl
+      )) as string;
+      const link = (await page.evaluate((tag) => tag?.href, el)) as string;
+
+      if (!image) {
+        return;
+      }
+
+      ggammaniList.push({
+        platform: 4,
+        image,
+        title,
+        link,
+      });
+    })
+  );
+
+  await page.close();
+
+  return ggammaniList;
+};
+
+export { danggn, joongna, chilten, bunjang, ggammani };

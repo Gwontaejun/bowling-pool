@@ -19,6 +19,10 @@ const SearchList = (props: PropsType) => {
         return '칠텐';
       case 2:
         return '중고나라';
+      case 3:
+        return '번개장터';
+      case 4:
+        return '깸마니';
       case 5:
         return '당근';
       default:

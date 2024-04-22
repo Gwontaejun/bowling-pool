@@ -38,6 +38,18 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'media.bunjang.co.kr',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img1.daumcdn.net',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   reactStrictMode: true,

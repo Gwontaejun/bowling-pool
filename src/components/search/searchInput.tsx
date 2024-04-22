@@ -38,7 +38,7 @@ const SearchInput = () => {
           삭제
         </button>
       )}
-      <button type="submit">dasdsa</button>
+      <button type="submit">Enter</button>
     </form>
   );
 };
