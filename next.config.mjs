@@ -50,6 +50,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cafeptthumb-phinf.pstatic.net',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   reactStrictMode: true,

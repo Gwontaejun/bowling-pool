@@ -47,7 +47,7 @@ const danggn = async (keyword: string) => {
       process.env.NODE_ENV === 'development'
         ? 'C:/Program Files/Google/Chrome/Application/chrome.exe'
         : await chromium.executablePath(),
-    headless: chromium.headless,
+    headless: true,
     ignoreHTTPSErrors: true,
   });
 
@@ -103,7 +103,7 @@ const joongna = async (keyword: string) => {
       process.env.NODE_ENV === 'development'
         ? 'C:/Program Files/Google/Chrome/Application/chrome.exe'
         : await chromium.executablePath(),
-    headless: chromium.headless,
+    headless: true,
     ignoreHTTPSErrors: true,
   });
 
@@ -157,7 +157,7 @@ const bunjang = async (keyword: string) => {
       process.env.NODE_ENV === 'development'
         ? 'C:/Program Files/Google/Chrome/Application/chrome.exe'
         : await chromium.executablePath(),
-    headless: chromium.headless,
+    headless: true,
     ignoreHTTPSErrors: true,
   });
 
@@ -211,7 +211,7 @@ const ggammani = async (keyword: string) => {
       process.env.NODE_ENV === 'development'
         ? 'C:/Program Files/Google/Chrome/Application/chrome.exe'
         : await chromium.executablePath(),
-    headless: chromium.headless,
+    headless: true,
     ignoreHTTPSErrors: true,
   });
 

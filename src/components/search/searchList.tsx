@@ -34,7 +34,7 @@ const SearchList = (props: PropsType) => {
       {list.map((item, index: number) => (
         <li key={`${index}`}>
           {getPlatform(item.platform)}
-          <Image src={item.image} width={500} height={500} alt={item.title} />
+          <Image src={item.image} width={50} height={50} alt={item.title} />
           <Link href={item.link}>{item.title}</Link>
         </li>
       ))}

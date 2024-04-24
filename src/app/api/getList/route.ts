@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { chilten, joongna, bunjang, ggammani, danggn } from '@src/service';
 
 import { SearchDataType } from '@src/app/api/getList/type';
-import { chilten, joongna, bunjang, ggammani, danggn } from '@src/service';
 
 // eslint-disable-next-line import/prefer-default-export
 export const GET = async (
