@@ -19,7 +19,11 @@
         "firebase-debug.log",
         "firebase-debug.*.log"
       ],
-      "codebase": "default"
+      "codebase": "default",
+      "frameworksBackend": {
+        "region": "us-central1",
+        "memory": "1GB"
+      }
     }
   ]
 }

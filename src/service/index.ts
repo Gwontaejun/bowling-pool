@@ -1,5 +1,6 @@
-import puppeteer from 'puppeteer-core';
+import puppeteer, { Browser } from 'puppeteer-core';
 import chromium from '@sparticuz/chromium';
+import _ from 'lodash';
 
 import { ChiltenResDataType, SearchDataType } from '@src/app/api/getList/type';
 
@@ -34,24 +35,26 @@ const chilten = async (keyword: string) => {
 };
 
 // 당근 크롤링
-const danggn = async (keyword: string) => {
+const danggn = async (keyword: string, browser: Browser) => {
   const danggnList: SearchDataType[] = [];
 
-  const browser = await puppeteer.launch({
-    defaultViewport: {
-      width: 1920,
-      height: 1080,
-    },
-    args: chromium.args,
-    executablePath:
-      process.env.NODE_ENV === 'development'
-        ? 'C:/Program Files/Google/Chrome/Application/chrome.exe'
-        : await chromium.executablePath(),
-    headless: true,
-    ignoreHTTPSErrors: true,
-  });
-
   const page = await browser.newPage();
+
+  await page.setRequestInterception(true);
+
+  page.on('request', (req) => {
+    if (
+      req.resourceType() === 'image' ||
+      req.resourceType() === 'font' ||
+      req.resourceType() === 'stylesheet'
+    ) {
+      // 만약 요청 타입이 '이미지' or 'CSS' or '폰트' 라면
+      req.abort(); // 거부
+    } else {
+      // 이미지가 아니라면
+      req.continue(); // 수락
+    }
+  });
 
   await page.goto(`https://www.daangn.com/search/${keyword}`, {
     waitUntil: 'load',
@@ -90,24 +93,21 @@ const danggn = async (keyword: string) => {
 };
 
 // 중고나라 크롤링
-const joongna = async (keyword: string) => {
+const joongna = async (keyword: string, browser: Browser) => {
   const joongnaList: SearchDataType[] = [];
 
-  const browser = await puppeteer.launch({
-    defaultViewport: {
-      width: 1920,
-      height: 1080,
-    },
-    args: chromium.args,
-    executablePath:
-      process.env.NODE_ENV === 'development'
-        ? 'C:/Program Files/Google/Chrome/Application/chrome.exe'
-        : await chromium.executablePath(),
-    headless: true,
-    ignoreHTTPSErrors: true,
-  });
-
   const page = await browser.newPage();
+
+  await page.setRequestInterception(true);
+
+  page.on('request', (req) => {
+    // 만약 요청 타입이 '폰트' or 'CSS'
+    if (req.resourceType() === 'font' || req.resourceType() === 'stylesheet') {
+      req.abort(); // 거부
+    } else {
+      req.continue(); // 수락
+    }
+  });
 
   await page.goto(
     `https://web.joongna.com/search/${keyword}?sort=RECENT_SORT`,
@@ -121,7 +121,7 @@ const joongna = async (keyword: string) => {
 
   await Promise.all(
     listEl.map(async (el) => {
-      const imgEl = await el.$('.rounded-md > img');
+      const imgEl = await el.$('.rounded-md > img.rounded-md');
       const titleEl = await el.$('.w-full > h2.text-heading');
       const image = (await page.evaluate((tag) => tag?.src, imgEl)) as string;
       const title = (await page.evaluate(
@@ -144,24 +144,26 @@ const joongna = async (keyword: string) => {
   return joongnaList;
 };
 
-const bunjang = async (keyword: string) => {
+const bunjang = async (keyword: string, browser: Browser) => {
   const bunjangList: SearchDataType[] = [];
 
-  const browser = await puppeteer.launch({
-    defaultViewport: {
-      width: 1920,
-      height: 1080,
-    },
-    args: chromium.args,
-    executablePath:
-      process.env.NODE_ENV === 'development'
-        ? 'C:/Program Files/Google/Chrome/Application/chrome.exe'
-        : await chromium.executablePath(),
-    headless: true,
-    ignoreHTTPSErrors: true,
-  });
-
   const page = await browser.newPage();
+
+  await page.setRequestInterception(true);
+
+  page.on('request', (req) => {
+    if (
+      req.resourceType() === 'image' ||
+      req.resourceType() === 'font' ||
+      req.resourceType() === 'stylesheet'
+    ) {
+      // 만약 요청 타입이 '이미지' or 'CSS' or '폰트' 라면
+      req.abort(); // 거부
+    } else {
+      // 이미지가 아니라면
+      req.continue(); // 수락
+    }
+  });
 
   await page.goto(
     `https://m.bunjang.co.kr/search/products?order=date&q=${keyword}`,
@@ -171,12 +173,12 @@ const bunjang = async (keyword: string) => {
     }
   );
 
-  const listEl = await page.$$('div.sc-eTpRJs > div.sc-dxZgTM > a.sc-jKVCRD');
+  const listEl = await page.$$('a[data-pid]');
 
   await Promise.all(
     listEl.map(async (el) => {
-      const imgEl = await el.$('.sc-kaNhvL > img');
-      const titleEl = await el.$('.sc-LKuAh > .sc-iBEsjs');
+      const imgEl = await el.$(':scope > :nth-child(1) > img');
+      const titleEl = await el.$(':scope > :nth-child(2) > :nth-child(1)');
       const image = (await page.evaluate((tag) => tag?.src, imgEl)) as string;
       const title = (await page.evaluate(
         (tag) => tag?.textContent,
@@ -198,24 +200,26 @@ const bunjang = async (keyword: string) => {
   return bunjangList;
 };
 
-const ggammani = async (keyword: string) => {
+const ggammani = async (keyword: string, browser: Browser) => {
   const ggammaniList: SearchDataType[] = [];
 
-  const browser = await puppeteer.launch({
-    defaultViewport: {
-      width: 1920,
-      height: 1080,
-    },
-    args: chromium.args,
-    executablePath:
-      process.env.NODE_ENV === 'development'
-        ? 'C:/Program Files/Google/Chrome/Application/chrome.exe'
-        : await chromium.executablePath(),
-    headless: true,
-    ignoreHTTPSErrors: true,
-  });
-
   const page = await browser.newPage();
+
+  await page.setRequestInterception(true);
+
+  page.on('request', (req) => {
+    if (
+      req.resourceType() === 'image' ||
+      req.resourceType() === 'font' ||
+      req.resourceType() === 'stylesheet'
+    ) {
+      // 만약 요청 타입이 '이미지' or 'CSS' or '폰트' 라면
+      req.abort(); // 거부
+    } else {
+      // 이미지가 아니라면
+      req.continue(); // 수락
+    }
+  });
 
   await page.goto(
     `https://m.cafe.daum.net/bowlingevent/search?query=${keyword}`,
@@ -256,4 +260,44 @@ const ggammani = async (keyword: string) => {
   return ggammaniList;
 };
 
-export { danggn, joongna, chilten, bunjang, ggammani };
+export const getCrawlList = async (keyword: string) => {
+  const browser = await puppeteer.launch({
+    defaultViewport: {
+      width: 1920,
+      height: 1080,
+    },
+    args: [
+      '--no-sandbox',
+      '--disable-gpu',
+      '--disable-dev-shm-usage',
+      '--disable-setuid-sandbox',
+      '--disable-infobars',
+      '--no-first-run',
+      '--no-sandbox',
+      '--no-zygote',
+      '--single-process',
+    ],
+    executablePath:
+      process.env.NODE_ENV === 'development'
+        ? 'C:/Program Files/Google/Chrome/Application/chrome.exe'
+        : await chromium.executablePath(),
+    headless: true,
+    ignoreHTTPSErrors: true,
+  });
+
+  const result = await Promise.all([
+    chilten(keyword),
+    joongna(keyword, browser),
+    bunjang(keyword, browser),
+    ggammani(keyword, browser),
+    danggn(keyword, browser),
+  ]).then((r) => {
+    return _.flattenDeep(r);
+  });
+
+  await browser.close();
+
+  return result;
+};
+
+export default getCrawlList;

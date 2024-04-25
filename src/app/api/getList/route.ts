@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { chilten, joongna, bunjang, ggammani, danggn } from '@src/service';
+import { getCrawlList } from '@src/service';
 
 import { SearchDataType } from '@src/app/api/getList/type';
 
@@ -11,13 +11,7 @@ export const GET = async (
 
   const keyword = searchParams.get('keyword');
 
-  const crawlResult = await Promise.all([
-    ...(await chilten(keyword ?? '')),
-    ...(await joongna(keyword ?? '')),
-    ...(await bunjang(keyword ?? '')),
-    ...(await ggammani(keyword ?? '')),
-    ...(await danggn(keyword ?? '')),
-  ]);
+  const crawlResult = await getCrawlList(keyword ?? '');
 
   return NextResponse.json({ list: crawlResult });
 };
