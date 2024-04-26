@@ -36,6 +36,8 @@ const SearchList = (props: PropsType) => {
           {getPlatform(item.platform)}
           <Image src={item.image} width={50} height={50} alt={item.title} />
           <Link href={item.link}>{item.title}</Link>
+          <br />
+          <span>{item.date}</span>
         </li>
       ))}
     </ul>

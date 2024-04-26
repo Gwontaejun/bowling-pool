@@ -14,5 +14,5 @@ export interface SearchDataType {
   link: string;
   title: string;
   image: string;
-  date?: string;
+  date?: number;
 }
