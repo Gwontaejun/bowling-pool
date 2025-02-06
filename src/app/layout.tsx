@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import SearchInput from '@src/components/search/searchInput';
+import Header from '@src/components/header';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SearchInput />
+        <Header />
         {children}
       </body>
     </html>

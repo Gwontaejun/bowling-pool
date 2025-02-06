@@ -1,11 +1,5 @@
-import SearchList from '@src/components/search/searchList';
-
 const Home = async () => {
-  return (
-    <div>
-      <SearchList list={[]} />
-    </div>
-  );
+  return <div />;
 };
 
 export default Home;

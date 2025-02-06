@@ -1,4 +1,5 @@
 import React from 'react';
+import SearchInput from '@src/components/search/searchInput';
 import SearchList from '@src/components/search/searchList';
 
 interface PropsType {
@@ -14,6 +15,7 @@ const Page = async ({ params }: PropsType) => {
 
   return (
     <div>
+      <SearchInput />
       <SearchList list={data.list} />
     </div>
   );
