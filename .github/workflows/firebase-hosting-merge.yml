@@ -15,5 +15,5 @@ jobs:
 
       - name: Deploy
         run: npx firebase-tools deploy --only functions:nextServer,hosting
-        with:
+        env:
           firebaseServiceAccount: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
